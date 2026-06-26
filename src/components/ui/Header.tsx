@@ -2,7 +2,8 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, ArrowRight } from 'lucide-react'
-import { navLinks, siteConfig } from '@/data/site'
+import { navLinks } from '@/data/site'
+import { trackCTA } from '@/lib/analytics'
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -16,6 +17,7 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // Scroll-spy : met en évidence la section visible dans la navigation.
   useEffect(() => {
     const sections = navLinks
       .map((link) => document.querySelector(link.href))
@@ -72,9 +74,7 @@ export default function Header() {
                 onClick={(e) => handleNavClick(e, link.href)}
                 aria-current={activeSection === link.href ? 'true' : undefined}
                 className={`relative px-3.5 py-2 text-sm font-medium rounded-lg transition-colors duration-200 ${
-                  activeSection === link.href
-                    ? 'text-navy-900'
-                    : 'text-slate-600 hover:text-navy-900'
+                  activeSection === link.href ? 'text-navy-900' : 'text-slate-600 hover:text-navy-900'
                 }`}
               >
                 {link.label}
@@ -90,7 +90,11 @@ export default function Header() {
           </nav>
 
           <div className="hidden lg:flex items-center">
-            <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-primary group !px-5 !py-2.5">
+            <a
+              href="#contact"
+              onClick={(e) => { trackCTA('me_contacter', 'header'); handleNavClick(e, '#contact') }}
+              className="btn-primary group !px-5 !py-2.5"
+            >
               Me contacter
               <ArrowRight size={15} aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-0.5" />
             </a>
@@ -136,7 +140,11 @@ export default function Header() {
                 </motion.a>
               ))}
               <div className="pt-3 mt-2 border-t border-slate-100">
-                <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="btn-primary w-full justify-center">
+                <a
+                  href="#contact"
+                  onClick={(e) => { trackCTA('me_contacter', 'header_mobile'); handleNavClick(e, '#contact') }}
+                  className="btn-primary w-full justify-center"
+                >
                   Me contacter
                   <ArrowRight size={16} aria-hidden="true" />
                 </a>

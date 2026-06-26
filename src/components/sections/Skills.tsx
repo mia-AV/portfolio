@@ -2,7 +2,7 @@
 import { FadeInView, StaggerContainer, StaggerItem } from '@/lib/motion'
 import SectionHeader from '@/components/ui/SectionHeader'
 import { Check, Wrench, Star } from 'lucide-react'
-import { skillCategories, tools, qualities } from '@/data/content'
+import { skillCategories, toolGroups, qualities } from '@/data/content'
 import { getIcon } from '@/lib/icons'
 
 export default function Skills() {
@@ -41,8 +41,9 @@ export default function Skills() {
           })}
         </StaggerContainer>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8">
-          <FadeInView>
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8">
+          {/* Outils maîtrisés — regroupés par catégorie (sur 2 colonnes en desktop) */}
+          <FadeInView className="lg:col-span-2">
             <div className="card-premium p-6 md:p-8 h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-11 h-11 icon-tile">
@@ -50,32 +51,42 @@ export default function Skills() {
                 </div>
                 <h3 className="text-lg font-semibold text-navy-900">Outils maîtrisés</h3>
               </div>
-              <ul className="flex flex-wrap gap-2">
-                {tools.map((tool, i) => (
-                  <li
-                    key={i}
-                    className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700"
-                  >
-                    {tool}
-                  </li>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6">
+                {toolGroups.map((group, i) => (
+                  <div key={i}>
+                    <p className="text-xs font-semibold uppercase tracking-wide text-navy-400 mb-2.5">
+                      {group.label}
+                    </p>
+                    <ul className="flex flex-wrap gap-2">
+                      {group.items.map((item, j) => (
+                        <li
+                          key={j}
+                          className="px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-xs font-medium text-slate-700"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </div>
             </div>
           </FadeInView>
 
+          {/* Qualités professionnelles */}
           <FadeInView delay={0.15}>
             <div className="card-premium p-6 md:p-8 h-full">
               <div className="flex items-center gap-3 mb-6">
                 <div className="w-11 h-11 icon-tile">
                   <Star size={20} aria-hidden="true" />
                 </div>
-                <h3 className="text-lg font-semibold text-navy-900">Qualités professionnelles</h3>
+                <h3 className="text-lg font-semibold text-navy-900">Qualités</h3>
               </div>
-              <ul className="grid grid-cols-2 gap-3">
+              <ul className="space-y-3">
                 {qualities.map((quality, i) => (
                   <li
                     key={i}
-                    className="flex flex-col gap-0.5 px-4 py-3 rounded-xl bg-navy-50/60 border border-navy-100"
+                    className="flex items-center justify-between px-4 py-3 rounded-xl bg-navy-50/60 border border-navy-100"
                   >
                     <span className="text-sm font-semibold text-navy-900">{quality.label}</span>
                     <span className="text-xs text-accent-600 font-medium">{quality.note}</span>

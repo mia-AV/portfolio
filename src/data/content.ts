@@ -1,4 +1,4 @@
-// Contenu éditorial centralisé : bénéfices, compétences, expériences, formations,
+﻿// Contenu éditorial centralisé : bénéfices, compétences, expériences, formations,
 // témoignages, résultats et environnement de travail.
 // Les données placeholder honnêtes sont marquées avec `isPlaceholder` afin
 // d'être facilement repérables et remplaçables par de vraies données.
@@ -100,6 +100,21 @@ export const tools = [
   'Zoom', 'HubSpot', 'Salesforce', 'Canva', 'WhatsApp Business',
 ]
 
+// Outils maîtrisés, regroupés par catégorie (affichage section Compétences).
+export interface ToolGroup {
+  label: string
+  items: string[]
+}
+
+export const toolGroups: ToolGroup[] = [
+  { label: 'CRM', items: ['Salesforce', 'Pipedrive', 'Monday'] },
+  { label: 'Facturation', items: ['Pennylane', 'PandaDoc'] },
+  { label: 'Organisation', items: ['Notion', 'Trello', 'Google Agenda'] },
+  { label: 'Communication', items: ['Slack', 'Teams', 'Discord', 'Telegram'] },
+  { label: 'Téléphonie', items: ['Ringover', 'On-Off'] },
+  { label: 'Bureautique', items: ['Google Workspace', 'Word', 'Excel', 'Zoom'] },
+]
+
 export const qualities = [
   { label: 'Organisation', note: 'Expertise' },
   { label: 'Communication', note: 'Expertise' },
@@ -113,65 +128,50 @@ export interface Experience {
   period: string
   location: string
   description: string
-  tasks: string[]
+  result?: string
+  current?: boolean
 }
 
 export const experiences: Experience[] = [
   {
     company: 'Mon Plan Immo',
-    role: 'Assistante administrative & Suivi client',
-    period: '2023 — Présent',
-    location: 'Remote (France)',
+    role: 'Assistante administrative & opérationnelle',
+    period: 'Janvier 2026 — Juin 2026',
+    location: 'À distance',
     description:
-      'Gestion des contrats, facturation, relances clients, suivi des dossiers et coordination administrative au quotidien.',
-    tasks: [
-      'Rédaction et envoi des contrats',
-      'Suivi de la facturation et des relances',
-      'Gestion des demandes clients',
-      'Coordination avec les équipes internes',
-    ],
+      'Je gère tout le back-office du quotidien : suivi des clients de la vente jusqu’à la fin de leur parcours, préparation et relance des contrats, création et suivi des factures, traitement des mails et des réclamations. Je centralise tous les documents pour que rien ne se perde, je coordonne les échanges avec les équipes et les prestataires, et j’ai mis en place mon propre système de relances pour ne jamais rien laisser passer.',
+    result:
+      'Un back-office qui tourne sans accroc, des délais respectés et une organisation que j’ai structurée moi-même au fil du temps.',
   },
   {
-    company: 'Acumen',
-    role: 'Chargée de recrutement & Suivi opérationnel',
-    period: '2022 — 2023',
-    location: 'Antananarivo, Madagascar',
+    company: 'Acumen Formation',
+    role: 'Chargée de recrutement & relations entreprises',
+    period: 'Mars 2025 — Juillet 2025',
+    location: 'À distance',
     description:
-      'Recrutement de profils francophones, gestion des candidatures et suivi des intégrations.',
-    tasks: [
-      'Sourcing et présélection de candidats',
-      'Gestion des entretiens et plannings',
-      'Suivi des intégrations',
-      'Reporting et mise à jour des bases',
-    ],
+      'Je recherchais et qualifiais des candidats, je menais les entretiens, et en parallèle je prospectais des entreprises pour comprendre leurs besoins en alternance. Mon rôle consistait à faire le lien entre les deux et à assurer le suivi jusqu’à la signature du contrat.',
+    result:
+      'Objectifs réguliers de 5 candidats qualifiés et 5 entreprises intéressées par jour, généralement atteints.',
   },
   {
     company: 'Eufonie Care',
-    role: 'Customer Care Specialist',
-    period: '2021 — 2022',
-    location: 'Antananarivo, Madagascar',
+    role: 'Téléprospectrice BtoB',
+    period: 'Octobre 2024 — Février 2025',
+    location: 'À distance',
     description:
-      'Prise en charge des demandes clients par téléphone et email, résolution de problèmes et suivi qualité.',
-    tasks: [
-      'Gestion des appels entrants et emails',
-      'Résolution de réclamations',
-      'Suivi de la satisfaction client',
-      'Mise à jour CRM',
-    ],
+      'Je réalisais jusqu’à 100 appels par jour auprès de responsables d’entreprises pour comprendre leurs besoins et présenter nos services. Je tenais aussi la base de données à jour et j’assurais le suivi des échanges — une expérience qui m’a appris à gérer un gros volume d’appels et à tenir le rythme.',
+    result:
+      'Une capacité confirmée à gérer un volume élevé d’appels quotidiens tout en maintenant un suivi rigoureux et une base de données fiable.',
   },
   {
-    company: 'Intelcia',
-    role: 'Conseillère clientèle',
-    period: '2020 — 2021',
+    company: 'Intelcia / Adm Value',
+    role: 'Conseillère clientèle & support',
+    period: 'Janvier 2022 — Septembre 2024',
     location: 'Antananarivo, Madagascar',
     description:
-      'Relation client pour des comptes francophones, gestion des demandes et fidélisation.',
-    tasks: [
-      'Accueil téléphonique',
-      'Traitement des demandes et réclamations',
-      'Ventes additionnelles',
-      'Suivi des indicateurs qualité',
-    ],
+      'Je répondais aux clients par téléphone, mail et chat — jusqu’à 50 appels par jour en période de forte affluence. Je gérais le service après-vente, les réclamations et le suivi des dossiers, tout en respectant des objectifs précis de satisfaction et de délais.',
+    result:
+      'Indicateurs de satisfaction maintenus, délais respectés (réponse chat en quelques secondes, mail sous 1h) et un vrai sens du client développé sur le terrain.',
   },
 ]
 
@@ -248,33 +248,141 @@ export const commitments: Commitment[] = [
   },
 ]
 
-export interface Testimonial {
-  name: string
-  role: string
-  content: string
-  isPlaceholder?: boolean
+// --- Services proposés (section orientée client) ---
+export interface Service {
+  iconName: string
+  title: string
+  description: string
+  missions: string[]
+  tools: string[]
+  benefit: string
 }
 
-export const testimonials: Testimonial[] = [
+export const services: Service[] = [
   {
-    name: 'Sophie M.',
-    role: 'Directrice — Mon Plan Immo',
-    content:
-      "Mia est d'une efficacité remarquable. Depuis qu'elle gère notre administratif, je peux enfin me concentrer sur le développement de mon activité.",
-    isPlaceholder: true,
+    iconName: 'FileText',
+    title: 'Gestion administrative',
+    description:
+      'Je prends en charge la paperasse qui vous ralentit pour fluidifier votre quotidien.',
+    missions: [
+      'Rédaction et suivi des contrats',
+      'Facturation et relances',
+      'Organisation et classement de dossiers',
+      'Saisie et traitement de données',
+    ],
+    tools: ['Google Workspace', 'Microsoft Office', 'Notion'],
+    benefit: 'Vous regagnez des heures chaque semaine et gardez des dossiers toujours à jour.',
   },
   {
-    name: 'Marc D.',
-    role: 'Fondateur — Startup SaaS',
-    content:
-      "Fiable, réactive et toujours de bonne humeur. Mia est exactement l'assistante dont tout entrepreneur a besoin pour ne plus se noyer dans la paperasse.",
-    isPlaceholder: true,
+    iconName: 'Headset',
+    title: 'Customer Care',
+    description:
+      'Vos clients sont accueillis, suivis et fidélisés avec attention et réactivité.',
+    missions: [
+      'Gestion des appels entrants',
+      'Prise en charge des demandes clients',
+      'Suivi des réclamations et des tickets',
+      'Relances et fidélisation',
+      'Gestion des emails et messageries',
+    ],
+    tools: ['HubSpot', 'Salesforce', 'Slack'],
+    benefit: 'Une relation client soignée qui renforce votre image et réduit les insatisfactions.',
   },
   {
-    name: 'Claire L.',
-    role: 'Consultante indépendante',
-    content:
-      "Je recommande Mia les yeux fermés. Elle a su s'adapter à mes process rapidement et gère tout de manière autonome. Un vrai gain de temps.",
-    isPlaceholder: true,
+    iconName: 'Database',
+    title: 'Back-office',
+    description:
+      'Je gère les tâches de fond qui font tourner votre activité en coulisses.',
+    missions: [
+      'Coordination administrative',
+      'Suivi des échéances et reporting',
+      'Mise à jour de bases de données',
+      'Support opérationnel aux équipes',
+    ],
+    tools: ['Trello', 'Notion', 'Microsoft Office'],
+    benefit: 'Une organisation fiable qui tourne en arrière-plan pendant que vous avancez.',
+  },
+]
+
+// --- Étapes de collaboration (section rassurante) ---
+export interface ProcessStep {
+  iconName: string
+  step: string
+  title: string
+  description: string
+}
+
+export const processSteps: ProcessStep[] = [
+  {
+    iconName: 'MessageSquare',
+    step: '01',
+    title: 'Premier échange',
+    description:
+      'On fait connaissance lors d’un appel ou d’un message. Vous me présentez votre activité et vos besoins, sans engagement.',
+  },
+  {
+    iconName: 'Search',
+    step: '02',
+    title: 'Analyse des besoins',
+    description:
+      'J’identifie précisément les tâches à déléguer, le volume et les priorités, puis je vous propose une organisation adaptée.',
+  },
+  {
+    iconName: 'Rocket',
+    step: '03',
+    title: 'Prise en charge des missions',
+    description:
+      'Je m’approprie vos process et vos outils, puis je prends le relais sur les missions convenues, en toute autonomie.',
+  },
+  {
+    iconName: 'RefreshCw',
+    step: '04',
+    title: 'Suivi régulier',
+    description:
+      'Points réguliers, reporting clair et communication proactive : vous gardez la visibilité, je m’occupe de l’exécution.',
+  },
+]
+
+// --- FAQ (optimisée SEO via JSON-LD FAQPage) ---
+export interface FaqItem {
+  question: string
+  answer: string
+}
+
+export const faqs: FaqItem[] = [
+  {
+    question: 'Travaillez-vous uniquement à distance ?',
+    answer:
+      'Oui, je travaille à 100 % à distance depuis Antananarivo, à Madagascar. Je suis équipée pour un remote fiable (connexion Starlink, générateur de secours) et j’accompagne mes clients où qu’ils se trouvent dans l’espace francophone.',
+  },
+  {
+    question: 'Quels sont vos horaires ?',
+    answer:
+      'Je suis disponible du lundi au vendredi. Mon fuseau horaire est GMT+3 (Antananarivo), ce qui couvre largement les heures de bureau européennes. Les plages horaires précises sont définies ensemble selon vos besoins.',
+  },
+  {
+    question: 'Travaillez-vous avec les PME ?',
+    answer:
+      'Absolument. J’accompagne principalement des PME, des agences, des indépendants et des organismes de formation francophones qui souhaitent déléguer leur gestion administrative et le suivi de leurs clients.',
+  },
+  {
+    question: 'Comment démarre une collaboration ?',
+    answer:
+      'Tout commence par un premier échange gratuit et sans engagement. Nous analysons ensuite vos besoins, puis je prends en charge les missions convenues avec un suivi régulier. Vous pouvez me contacter par email ou directement sur WhatsApp.',
+  },
+  {
+    question: 'Puis-je vous confier quelques heures seulement ?',
+    answer:
+      'Oui. Je m’adapte à votre rythme : une mission ponctuelle de quelques heures, un accompagnement régulier ou un engagement au long cours. La formule est définie selon votre charge réelle.',
+  },
+  {
+    question: 'Quels outils utilisez-vous ?',
+    answer:
+      'Je maîtrise Google Workspace, Microsoft Office, Notion, Trello, Slack, Zoom, les CRM (HubSpot, Salesforce), Canva et WhatsApp Business. Je m’adapte aussi facilement aux outils que vous utilisez déjà.',
+  },
+  {
+    question: 'Puis-je vous contacter sur WhatsApp ?',
+    answer:
+      'Oui, WhatsApp est l’un de mes canaux privilégiés pour échanger rapidement. Vous trouverez un bouton WhatsApp sur le site, avec un message pré-rempli pour démarrer la conversation en un clic.',
   },
 ]

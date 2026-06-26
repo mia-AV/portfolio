@@ -1,7 +1,12 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { siteConfig } from '@/data/site'
+import { faqs } from '@/data/content'
 import { ToastProvider } from '@/components/ui/Toast'
+import { AnalyticsScripts, GtmNoScript } from '@/components/analytics/AnalyticsScripts'
+import Header from '@/components/ui/Header'
+import Footer from '@/components/ui/Footer'
+import WhatsAppButton from '@/components/ui/WhatsAppButton'
 import './globals.css'
 
 const inter = Inter({
@@ -68,6 +73,13 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      'max-video-preview': -1,
+    },
   },
 }
 
@@ -91,17 +103,41 @@ const jsonLd = {
   knowsLanguage: ['fr', 'en', 'mg'],
 }
 
+// JSON-LD FAQPage : rich snippets Google pour la FAQ de la page.
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: faqs.map((faq) => ({
+    '@type': 'Question',
+    name: faq.question,
+    acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+  })),
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="fr" className={inter.variable}>
+      <head>
+        <AnalyticsScripts />
+      </head>
       <body>
+        <GtmNoScript />
         <a href="#contenu" className="skip-link">
           Aller au contenu principal
         </a>
-        <ToastProvider>{children}</ToastProvider>
+        <ToastProvider>
+          <Header />
+          <main id="contenu">{children}</main>
+          <Footer />
+          <WhatsAppButton />
+        </ToastProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
         />
       </body>
     </html>

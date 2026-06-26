@@ -6,6 +6,10 @@ import {
 } from 'lucide-react'
 import { siteConfig, whatsappUrl } from '@/data/site'
 import { useToast } from '@/components/ui/Toast'
+import BookCallButton from '@/components/ui/BookCallButton'
+import {
+  trackEmail, trackPhone, trackLinkedIn, trackWhatsApp, trackFormSubmit, trackCTA,
+} from '@/lib/analytics'
 
 // Identifiant Formspree (surchargeable via variable d'environnement).
 const FORMSPREE_ID = process.env.NEXT_PUBLIC_FORMSPREE_ID ?? siteConfig.formspreeId
@@ -36,6 +40,7 @@ export default function Contact() {
     try {
       await navigator.clipboard.writeText(value)
       setCopied(label)
+      trackCTA(`copy_${label.toLowerCase()}`, 'contact')
       toast(`${label} copié dans le presse-papiers`, 'success')
       setTimeout(() => setCopied(null), 2000)
     } catch {
@@ -65,6 +70,7 @@ export default function Contact() {
       if (res.ok) {
         setStatus('success')
         setFormData({ name: '', email: '', subject: '', message: '' })
+        trackFormSubmit('success')
         toast('Message envoyé ! Je vous réponds très vite.', 'success')
       } else {
         const data = await res.json().catch(() => null)
@@ -73,17 +79,35 @@ export default function Contact() {
           'L\u2019envoi a échoué. Réessayez dans un instant.'
         setStatus('error')
         setErrorMsg(msg)
+        trackFormSubmit('error')
         toast(msg, 'error')
       }
     } catch {
       const msg = 'Problème de connexion. Vérifiez votre réseau et réessayez.'
       setStatus('error')
       setErrorMsg(msg)
+      trackFormSubmit('error')
       toast(msg, 'error')
     }
   }
 
   const isSubmitting = status === 'submitting'
+
+  // Dispatche l'événement analytics adapté au canal de contact.
+  const trackContactClick = (label: string) => {
+    switch (label) {
+      case 'Email':
+        return trackEmail('contact')
+      case 'Téléphone':
+        return trackPhone('contact')
+      case 'LinkedIn':
+        return trackLinkedIn('contact')
+      case 'WhatsApp':
+        return trackWhatsApp('contact')
+      default:
+        return undefined
+    }
+  }
 
   return (
     <section id="contact" className="section-padding bg-gradient-to-b from-slate-50 to-white">
@@ -127,6 +151,7 @@ export default function Contact() {
                             href={info.href}
                             target={info.href.startsWith('http') ? '_blank' : undefined}
                             rel={info.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                            onClick={() => trackContactClick(info.label)}
                             className="text-sm font-medium text-white hover:text-accent-300 transition-colors break-words"
                           >
                             {info.value}
@@ -162,6 +187,8 @@ export default function Contact() {
                     <p className="text-xs text-navy-400 mt-0.5">Fuseau horaire : {siteConfig.timezone}</p>
                   </div>
                 </div>
+
+                <BookCallButton source="contact" className="btn-secondary w-full justify-center mt-4" />
               </div>
             </div>
           </FadeInView>

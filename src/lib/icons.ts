@@ -1,7 +1,8 @@
 import {
   Clock, Shield, Heart, FileText, Users, Wrench, Briefcase, Globe, Wifi,
   GraduationCap, Monitor, Zap, ClipboardCheck, MailCheck, CalendarClock,
-  Star, Award,
+  Star, Award, Headset, PhoneCall, Database, MessageSquare, Search, Rocket,
+  RefreshCw,
   type LucideIcon,
 } from 'lucide-react'
 
@@ -10,7 +11,8 @@ import {
 const iconMap: Record<string, LucideIcon> = {
   Clock, Shield, Heart, FileText, Users, Wrench, Briefcase, Globe, Wifi,
   GraduationCap, Monitor, Zap, ClipboardCheck, MailCheck, CalendarClock,
-  Star, Award,
+  Star, Award, Headset, PhoneCall, Database, MessageSquare, Search, Rocket,
+  RefreshCw,
 }
 
 export function getIcon(name: string): LucideIcon {

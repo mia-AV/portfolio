@@ -20,6 +20,21 @@
     @apply tracking-tight;
   }
 
+  /* Échelle typographique éditoriale */
+  .text-display {
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+  }
+  .text-balance {
+    text-wrap: balance;
+  }
+  /* Mot mis en relief (italique fin, pour les titres éditoriaux) */
+  .accent-word {
+    font-style: italic;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+
   /* Focus visible cohérent et accessible */
   a:focus-visible,
   button:focus-visible,
@@ -66,6 +81,19 @@
   }
   .section-subtitle {
     @apply text-lg text-slate-600 max-w-2xl leading-relaxed;
+  }
+
+  /* Numéro d'index éditorial (grand chiffre en filigrane) */
+  .section-index {
+    @apply font-bold leading-none text-navy-100 select-none;
+    font-size: clamp(3.5rem, 8vw, 6rem);
+    letter-spacing: -0.04em;
+  }
+
+  /* Transitions douces entre sections (séparateurs en biseau de couleur) */
+  .edge-fade-b {
+    -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
   }
 
   /* --- Cartes --- */

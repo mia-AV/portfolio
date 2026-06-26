@@ -9,8 +9,8 @@ export const siteConfig = {
   location: 'Antananarivo, Madagascar',
   timezone: 'GMT+3 (Antananarivo)',
   availability: 'Disponible du lundi au vendredi',
-  // Remplacer par l'URL de production réelle une fois le site déployé.
-  url: 'https://mia-assistante.com',
+  // URL de production (issue de NEXT_PUBLIC_SITE_URL, repli si absente).
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://portfolio-sigma-two-c8oa4be84r.vercel.app',
   email: 'mrasaholiarivelo@gmail.com',
   phone: '+261 34 14 507 30',
   phoneRaw: '261341450730',
@@ -20,6 +20,8 @@ export const siteConfig = {
   // Message WhatsApp pré-rempli (encodé à l'usage).
   whatsappMessage:
     "Bonjour Mia,\n\nJe souhaite échanger avec vous concernant une mission d'assistance administrative.",
+  // Lien Calendly pour réserver un appel découverte (surchargeable via env).
+  calendly: process.env.NEXT_PUBLIC_CALENDLY_URL ?? 'https://calendly.com/mrasaholiarivelo/30min',
   cv: '/docs/cv-mia.pdf',
   yearsOfExperience: 4,
   // Identifiant Formspree pour l'envoi du formulaire de contact.
@@ -34,7 +36,7 @@ export const whatsappUrl = `${siteConfig.whatsapp}?text=${encodeURIComponent(
 export const navLinks = [
   { label: 'Accueil', href: '#accueil' },
   { label: 'À propos', href: '#a-propos' },
-  { label: 'Atouts', href: '#atouts' },
+  { label: 'Services', href: '#services' },
   { label: 'Compétences', href: '#competences' },
   { label: 'Parcours', href: '#experiences' },
   { label: 'Contact', href: '#contact' },
