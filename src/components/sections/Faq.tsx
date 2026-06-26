@@ -25,7 +25,7 @@ export default function Faq() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackWhatsApp('faq')}
-              className="btn-whatsapp"
+              className="btn-whatsapp hidden lg:inline-flex"
             >
               <MessageCircle size={16} aria-hidden="true" />
               Une autre question ?
@@ -57,6 +57,20 @@ export default function Faq() {
                 </StaggerItem>
               ))}
             </StaggerContainer>
+
+            {/* CTA WhatsApp — visible uniquement sur mobile, après l'accordéon */}
+            <div className="mt-8 text-center lg:hidden">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => trackWhatsApp('faq')}
+                className="btn-whatsapp"
+              >
+                <MessageCircle size={16} aria-hidden="true" />
+                Une autre question ?
+              </a>
+            </div>
           </div>
         </div>
       </div>
