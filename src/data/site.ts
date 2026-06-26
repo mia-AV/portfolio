@@ -8,7 +8,7 @@ export const siteConfig = {
   role: 'Assistante virtuelle & Customer Care',
   location: 'Antananarivo, Madagascar',
   timezone: 'GMT+3 (Antananarivo)',
-  availability: 'Disponible du lundi au vendredi',
+  availability: 'Disponible du lundi au samedi',
   // URL de production (issue de NEXT_PUBLIC_SITE_URL, repli si absente).
   url: process.env.NEXT_PUBLIC_SITE_URL ?? 'https://portfolio-sigma-two-c8oa4be84r.vercel.app',
   email: 'mrasaholiarivelo@gmail.com',

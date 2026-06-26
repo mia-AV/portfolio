@@ -38,7 +38,11 @@ export default function Header() {
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     setIsMobileMenuOpen(false)
-    document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    // Defer scroll to allow the mobile menu exit animation to complete
+    // and the browser to release any overflow lock.
+    setTimeout(() => {
+      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' })
+    }, 50)
   }
 
   return (
@@ -122,22 +126,25 @@ export default function Header() {
           >
             <nav className="px-4 py-4 space-y-1" aria-label="Navigation mobile">
               {navLinks.map((link, i) => (
-                <motion.a
+                <motion.div
                   key={link.href}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
                   initial={{ opacity: 0, x: -12 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: 0.05 + i * 0.04 }}
-                  className={`flex items-center justify-between px-4 py-3 text-base font-medium rounded-xl transition-colors ${
-                    activeSection === link.href
-                      ? 'text-navy-900 bg-navy-50'
-                      : 'text-slate-700 hover:text-navy-900 hover:bg-navy-50'
-                  }`}
                 >
-                  {link.label}
-                  <ArrowRight size={16} className="text-slate-300" aria-hidden="true" />
-                </motion.a>
+                  <a
+                    href={link.href}
+                    onClick={(e) => handleNavClick(e, link.href)}
+                    className={`flex items-center justify-between px-4 py-3 text-base font-medium rounded-xl transition-colors ${
+                      activeSection === link.href
+                        ? 'text-navy-900 bg-navy-50'
+                        : 'text-slate-700 hover:text-navy-900 hover:bg-navy-50'
+                    }`}
+                  >
+                    {link.label}
+                    <ArrowRight size={16} className="text-slate-300" aria-hidden="true" />
+                  </a>
+                </motion.div>
               ))}
               <div className="pt-3 mt-2 border-t border-slate-100">
                 <a
