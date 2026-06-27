@@ -1,5 +1,5 @@
 'use client'
-import { StaggerContainer, StaggerItem } from '@/lib/motion'
+import { StaggerContainer, StaggerItem, RevealOnScroll } from '@/lib/motion'
 import SectionHeader from '@/components/ui/SectionHeader'
 import { Check, ArrowRight, Star } from 'lucide-react'
 import { services } from '@/data/content'
@@ -18,6 +18,7 @@ export default function Services() {
           subtitle="Des prestations concrètes, pensées pour libérer votre temps et fiabiliser votre organisation."
         />
 
+        <RevealOnScroll width="full">
         <StaggerContainer className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-7">
           {services.map((service, i) => {
             const Icon = getIcon(service.iconName)
@@ -80,8 +81,7 @@ export default function Services() {
             )
           })}
         </StaggerContainer>
-
-        {/* CTA de section */}
+        </RevealOnScroll>
         <div className="mt-10 text-center">
           <a
             href="#contact"

@@ -1,5 +1,5 @@
 'use client'
-import { StaggerContainer, StaggerItem } from '@/lib/motion'
+import { StaggerContainer, StaggerItem, RevealOnScroll } from '@/lib/motion'
 import SectionHeader from '@/components/ui/SectionHeader'
 import { workspaceItems } from '@/data/content'
 import { getIcon } from '@/lib/icons'
@@ -26,6 +26,7 @@ export default function Workspace() {
           subtitle="Équipée pour travailler efficacement et sans interruption, où que soient mes clients."
         />
 
+        <RevealOnScroll width="full">
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
           {workspaceItems.map((item, i) => {
             const Icon = getIcon(item.iconName)
@@ -42,6 +43,7 @@ export default function Workspace() {
             )
           })}
         </StaggerContainer>
+        </RevealOnScroll>
       </div>
     </section>
   )

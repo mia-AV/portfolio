@@ -1,5 +1,5 @@
 'use client'
-import { FadeInView, StaggerContainer, StaggerItem } from '@/lib/motion'
+import { SlideIn, StaggerContainer, StaggerItem } from '@/lib/motion'
 import { aboutHighlights, languages } from '@/data/content'
 import { getIcon } from '@/lib/icons'
 
@@ -9,7 +9,7 @@ export default function About() {
       <div className="container-premium">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
           {/* Récit éditorial */}
-          <FadeInView className="lg:col-span-7">
+          <SlideIn from="left" className="lg:col-span-7">
             <span className="section-eyebrow">À propos</span>
             <h2 className="section-title">Votre administratif, entre de bonnes mains</h2>
             <div className="space-y-5 mt-6">
@@ -52,7 +52,7 @@ export default function About() {
                 ))}
               </div>
             </div>
-          </FadeInView>
+          </SlideIn>
 
           {/* Atouts en colonne */}
           <StaggerContainer className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 lg:mt-4">
