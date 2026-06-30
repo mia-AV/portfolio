@@ -37,6 +37,7 @@ export const navLinks = [
   { label: 'Accueil', href: '#accueil' },
   { label: 'À propos', href: '#a-propos' },
   { label: 'Services', href: '#services' },
+  { label: 'Avis', href: '#temoignages' },
   { label: 'Compétences', href: '#competences' },
   { label: 'Parcours', href: '#experiences' },
   { label: 'Contact', href: '#contact' },

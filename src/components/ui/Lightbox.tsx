@@ -31,7 +31,6 @@ export default function Lightbox({ items, index, onClose, onNavigate }: Lightbox
     onNavigate((index + 1) % items.length)
   }, [index, items.length, onNavigate])
 
-  // Navigation clavier + verrouillage du scroll
   useEffect(() => {
     if (!isOpen) return
     const onKey = (e: KeyboardEvent) => {
@@ -60,18 +59,17 @@ export default function Lightbox({ items, index, onClose, onNavigate }: Lightbox
           transition={{ duration: 0.25 }}
           role="dialog"
           aria-modal="true"
-          aria-label={`Témoignage ${index + 1} sur ${items.length}`}
+          aria-label={`Témoignage de ${current.client}`}
           onClick={onClose}
         >
-          {/* Fond */}
           <div className="absolute inset-0 bg-navy-950/90 backdrop-blur-sm" aria-hidden="true" />
 
-          {/* Barre d'actions */}
+          {/* Actions */}
           <div className="absolute top-4 right-4 z-20 flex items-center gap-2">
             <button
               onClick={(e) => { e.stopPropagation(); setZoomed((z) => !z) }}
               className="flex items-center justify-center w-11 h-11 rounded-full bg-white/10 text-white border border-white/15 hover:bg-white/20 transition-colors"
-              aria-label={zoomed ? 'Dézoomer' : 'Zoomer'}
+              aria-label={zoomed ? 'Réduire' : 'Agrandir'}
             >
               {zoomed ? <ZoomOut size={20} aria-hidden="true" /> : <ZoomIn size={20} aria-hidden="true" />}
             </button>
@@ -85,27 +83,27 @@ export default function Lightbox({ items, index, onClose, onNavigate }: Lightbox
             </button>
           </div>
 
-          {/* Précédent / Suivant (desktop) */}
+          {/* Précédent / Suivant */}
           {items.length > 1 && (
             <>
               <button
                 onClick={(e) => { e.stopPropagation(); goPrev() }}
                 className="hidden sm:flex absolute left-4 z-20 items-center justify-center w-12 h-12 rounded-full bg-white/10 text-white border border-white/15 hover:bg-white/20 transition-colors"
-                aria-label="Témoignage précédent"
+                aria-label="Précédent"
               >
                 <ChevronLeft size={24} aria-hidden="true" />
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); goNext() }}
                 className="hidden sm:flex absolute right-4 z-20 items-center justify-center w-12 h-12 rounded-full bg-white/10 text-white border border-white/15 hover:bg-white/20 transition-colors"
-                aria-label="Témoignage suivant"
+                aria-label="Suivant"
               >
                 <ChevronRight size={24} aria-hidden="true" />
               </button>
             </>
           )}
 
-          {/* Contenu : capture + légende */}
+          {/* Capture */}
           <motion.div
             key={index}
             className="relative z-10 flex flex-col items-center"
@@ -123,34 +121,29 @@ export default function Lightbox({ items, index, onClose, onNavigate }: Lightbox
             }}
           >
             <motion.div
-              className={`relative overflow-hidden rounded-[1.75rem] border-4 border-white/10 shadow-2xl bg-white ${
+              className={`relative overflow-hidden rounded-2xl border-4 border-white/10 shadow-2xl bg-white ${
                 zoomed ? 'cursor-zoom-out' : 'cursor-zoom-in'
               }`}
-              animate={{ scale: zoomed ? 1.35 : 1 }}
+              animate={{ scale: zoomed ? 1.5 : 1 }}
               transition={{ type: 'spring', stiffness: 260, damping: 26 }}
               onClick={() => setZoomed((z) => !z)}
-              style={{ width: 'min(82vw, 22rem)' }}
+              style={{ width: 'min(82vw, 26rem)' }}
             >
-              <div className="relative w-full" style={{ aspectRatio: '9 / 19' }}>
+              <div className="relative w-full" style={{ aspectRatio: current.ratio ?? 1080 / 1490 }}>
                 <Image
                   src={current.image}
                   alt={current.alt}
                   fill
                   className="object-cover select-none"
-                  sizes="(max-width: 640px) 82vw, 22rem"
+                  sizes="(max-width: 640px) 82vw, 26rem"
                   draggable={false}
                 />
               </div>
             </motion.div>
 
-            {/* Légende */}
             <div className="mt-5 text-center text-white max-w-sm px-4">
               <p className="text-sm font-semibold">{current.client}</p>
-              <p className="text-xs text-navy-300">
-                {current.company}
-                {current.company && current.date ? ' · ' : ''}
-                {current.date}
-              </p>
+              <p className="text-xs text-navy-300">{current.role}</p>
               {items.length > 1 && (
                 <p className="mt-3 text-xs text-navy-400">
                   {index + 1} / {items.length}
